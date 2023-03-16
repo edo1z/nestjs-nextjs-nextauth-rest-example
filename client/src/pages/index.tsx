@@ -1,4 +1,5 @@
 import {signIn, signOut, useSession} from 'next-auth/react'
+import {Button} from '@nextui-org/react'
 
 export default function Index() {
   const {data:session, status} = useSession();
@@ -10,12 +11,12 @@ export default function Index() {
       {loading && <p>Loading...</p>}
       {!loading && !session && (
         <>
-          <button onClick={e => signIn()}>SignIN</button><br/>
+          <Button onClick={e => signIn()}>SignIN</Button><br/>
         </>
       )}
        {!loading && session && (
         <>
-          <button onClick={e => signOut()}>SignOUT</button>
+          <Button onClick={e => signOut()}>SignOUT</Button>
         </>
       )}
     </div>
