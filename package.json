@@ -1,0 +1,14 @@
+{
+  "name": "nestjs-nextjs-nextauth-rest-example",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "web3ten0",
+  "license": "MIT",
+  "workspaces": [
+    "api",
+    "client",
+    "database"
+  ]
+}
