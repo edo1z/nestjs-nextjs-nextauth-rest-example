@@ -1,24 +1,34 @@
-import { Flex, Spacer, Button } from "@chakra-ui/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import {signIn, signOut, useSession} from 'next-auth/react'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import {
+  Flex,
+  Spacer,
+  Button,
+  IconButton,
+  useColorMode,
+  Switch,
+} from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 export default function NavBar() {
-  const {data:session, status} = useSession();
+  const { data: session, status } = useSession();
   const loading = status === 'loading';
 
   const router = useRouter();
   const signOutBtn = (
-    <Button colorScheme="teal" onClick={e => signOut()}>
+    <Button colorScheme="teal" onClick={(e) => signOut()}>
       Sign Out
     </Button>
   );
   const signInBtn = (
-    <Button colorScheme="teal" onClick={e => signIn()}>
+    <Button colorScheme="teal" onClick={(e) => signIn()}>
       Sign In
     </Button>
   );
   const authBtn = session ? signOutBtn : signInBtn;
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
@@ -31,6 +41,20 @@ export default function NavBar() {
     >
       <Link href="/">HOGE</Link>
       <Spacer />
+      <IconButton
+        aria-label="Toggle color mode"
+        icon={
+          colorMode === 'light' ? (
+            <MoonIcon color="white" />
+          ) : (
+            <SunIcon color="white" />
+          )
+        }
+        bg="teal"
+        _hover={{ bg: 'teal.400' }}
+        onClick={toggleColorMode}
+        variant="outline"
+      />
       {!loading && authBtn}
     </Flex>
   );
