@@ -7,10 +7,13 @@ import {
   Button,
   IconButton,
   useColorMode,
-  Switch,
+  Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { Inter, Rubik } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'] });
+const rubik = Rubik({ subsets: ['latin'] });
 
 export default function NavBar() {
   const { data: session, status } = useSession();
@@ -43,7 +46,16 @@ export default function NavBar() {
       bg={bgColor}
       color={color}
     >
-      <Link href="/">BLOGG</Link>
+      <Link href="/" passHref>
+        <Text
+          as="a"
+          fontSize="xl"
+          fontWeight="bold"
+          className={rubik.className}
+        >
+          BLOGG
+        </Text>
+      </Link>
       <Spacer />
       <IconButton
         aria-label="Toggle color mode"
