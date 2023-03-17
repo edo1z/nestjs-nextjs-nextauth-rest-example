@@ -10,11 +10,13 @@
     "format": "npx prisma format",
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "seed": "ts-node src/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^3.10.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.1",
