@@ -8,6 +8,7 @@ import {
   IconButton,
   useColorMode,
   Switch,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
@@ -30,27 +31,24 @@ export default function NavBar() {
 
   const { colorMode, toggleColorMode } = useColorMode();
 
+  const bgColor = useColorModeValue('teal.500', 'teal.800');
+  const color = useColorModeValue('white', 'white');
+
   return (
     <Flex
       minWidth="max-content"
       alignItems="center"
       gap="2"
       p={4}
-      bg="teal.500"
-      color="white"
+      bg={bgColor}
+      color={color}
     >
-      <Link href="/">HOGE</Link>
+      <Link href="/">BLOGG</Link>
       <Spacer />
       <IconButton
         aria-label="Toggle color mode"
-        icon={
-          colorMode === 'light' ? (
-            <MoonIcon color="white" />
-          ) : (
-            <SunIcon color="white" />
-          )
-        }
-        bg="teal"
+        icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+        bg={bgColor}
         _hover={{ bg: 'teal.400' }}
         onClick={toggleColorMode}
         variant="outline"
