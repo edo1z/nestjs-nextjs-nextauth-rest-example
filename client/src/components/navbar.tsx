@@ -46,13 +46,8 @@ export default function NavBar() {
       bg={bgColor}
       color={color}
     >
-      <Link href="/" passHref>
-        <Text
-          as="a"
-          fontSize="xl"
-          fontWeight="bold"
-          className={rubik.className}
-        >
+      <Link href="/">
+        <Text fontSize="xl" fontWeight="bold" className={rubik.className}>
           BLOGG
         </Text>
       </Link>

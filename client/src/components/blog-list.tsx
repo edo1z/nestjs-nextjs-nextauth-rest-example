@@ -6,7 +6,6 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-import { Post } from '../types/blog';
 import { samplePosts } from '@/mock-data/sample-posts';
 import { BlogPostCard } from './blog-post-card';
 
@@ -22,9 +21,6 @@ export default function BlogList() {
       align="start"
       bg={bg}
     >
-      <Heading as="h1" size="2xl" alignSelf="center">
-        Saved Blog Posts
-      </Heading>
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
         spacing={{ base: 5, lg: 8 }}

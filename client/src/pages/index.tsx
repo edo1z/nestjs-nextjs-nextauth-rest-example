@@ -1,5 +1,5 @@
 import { signIn, useSession } from 'next-auth/react';
-import { Container, Heading, Button, VStack } from '@chakra-ui/react';
+import { Container, Heading, Button, VStack, Box } from '@chakra-ui/react';
 import BlogList from '@/components/blog-list';
 
 export default function Index() {
@@ -26,11 +26,22 @@ export default function Index() {
     </>
   );
 
+  const latestBlogList = (
+    <>
+      <Box mt={10} mb={6}>
+        <Heading as="h1" size="2xl" textAlign="center">
+          Latest Blog Posts
+        </Heading>
+      </Box>
+      <BlogList />
+    </>
+  );
+
   return (
     <>
       {loading && <div>Loading...</div>}
       {!loading && !session && notSignIn}
-      {!loading && session && <BlogList />}
+      {!loading && session && latestBlogList}
     </>
   );
 }
