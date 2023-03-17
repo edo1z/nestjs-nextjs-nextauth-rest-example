@@ -49,6 +49,7 @@ model User {
   active        Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  posts         Post[]
 }
 
 model VerificationToken {
@@ -59,15 +60,13 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Products {
-  id          String   @id @default(uuid())
-  userId      String
-  name        String
-  amount      Int
-  stock       Int?
-  description String?
-  image       String?
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  category  String
+  content   String
+  author    String
+  user      User     @relation(fields: [author], references: [id], onDelete: Cascade)
 }
