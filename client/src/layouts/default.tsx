@@ -11,7 +11,7 @@ export default function Default({ children }: Props) {
   return (
     <div>
       <NavBar />
-      <Container pt={10}>{children}</Container>
+        {children}
       <Footer />
     </div>
   );

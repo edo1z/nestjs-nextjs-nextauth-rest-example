@@ -28,6 +28,41 @@ const samplePosts: Post[] = [
     title: "Sample Blog Post 3",
     createdAt: "2023-03-16",
   },
+  {
+    id: 4,
+    title: "Sample Blog Post 4",
+    createdAt: "2023-03-17",
+  },
+  {
+    id: 5,
+    title: "Sample Blog Post 5",
+    createdAt: "2023-03-18",
+  },
+  {
+    id: 6,
+    title: "Sample Blog Post 6",
+    createdAt: "2023-03-19",
+  },
+  {
+    id: 7,
+    title: "Sample Blog Post 7",
+    createdAt: "2023-03-20",
+  },
+  {
+    id: 8,
+    title: "Sample Blog Post 8",
+    createdAt: "2023-03-21",
+  },
+  {
+    id: 9,
+    title: "Sample Blog Post 9",
+    createdAt: "2023-03-22",
+  },
+  {
+    id: 10,
+    title: "Sample Blog Post 10",
+    createdAt: "2023-03-23",
+  },
 ];
 
 export default function BlogList() {
@@ -48,9 +83,12 @@ export default function BlogList() {
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
         spacing={{ base: 5, lg: 8 }}
+        w="100%"
       >
         {samplePosts.map((post) => (
-          <BlogPostCard key={post.id} post={post} />
+          <Box w="100%" key={post.id}>
+            <BlogPostCard post={post} />
+          </Box>
         ))}
       </SimpleGrid>
     </VStack>
@@ -69,6 +107,7 @@ function BlogPostCard({ post }: BlogPostCardProps) {
       overflow="hidden"
       boxShadow="md"
       p={4}
+      w="100%"
     >
       <Heading as="h2" size="md" mb={3}>
         {post.title}
@@ -79,4 +118,3 @@ function BlogPostCard({ post }: BlogPostCardProps) {
     </Box>
   );
 }
-
