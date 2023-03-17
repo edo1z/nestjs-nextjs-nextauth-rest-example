@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { BlogPost } from '../../components/blog-post';
+import { useSession } from 'next-auth/react';
+import { BlogPost } from '@/components/blog-post';
 import { Post } from '@/types/blog';
 import { samplePosts } from '@/mock-data/sample-posts';
 
@@ -10,8 +12,16 @@ interface BlogPostPageProps {
 
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  const loading = status === 'loading';
 
-  if (router.isFallback) {
+  useEffect(() => {
+    if (!loading && !session) {
+      router.push('/');
+    }
+  }, [loading, session, router]);
+
+  if (router.isFallback || loading) {
     return <div>Loading...</div>;
   }
 
