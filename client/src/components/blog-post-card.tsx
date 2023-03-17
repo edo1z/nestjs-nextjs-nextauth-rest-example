@@ -1,8 +1,8 @@
 import { Box, Heading, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { BlogPostCardProps } from '@/types/blog';
+import { BlogPostProps } from '@/types/blog';
 
-export const BlogPostCard: React.FC<BlogPostCardProps> = ({ post }) => {
+export const BlogPostCard: React.FC<BlogPostProps> = ({ post }) => {
   return (
     <Box
       borderWidth={1}

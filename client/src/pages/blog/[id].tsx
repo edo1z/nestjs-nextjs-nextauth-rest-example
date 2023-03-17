@@ -1,50 +1,42 @@
-// pages/blog/[id].tsx
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { BlogPost } from '../../components/blog-post';
+import { Post } from '@/types/blog';
+import { samplePosts } from '@/mock-data/sample-posts';
 
 interface BlogPostPageProps {
-  title: string;
-  content: string;
-  createdAt: string;
+  post: Post;
 }
 
-const BlogPostPage: React.FC<BlogPostPageProps> = ({
-  title,
-  content,
-  createdAt,
-}) => {
+const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
   const router = useRouter();
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
-  return <BlogPost title={title} content={content} createdAt={createdAt} />;
+  return <BlogPost post={post} />;
 };
 
 export default BlogPostPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // ここでブログ記事のIDを取得し、pathsを生成します。
-  // 実際のデータ取得ロジックは、APIやデータベースに応じて実装してください。
-  const paths = [
-    { params: { id: '1' } },
-    { params: { id: '2' } },
-    { params: { id: '3' } },
-  ];
+  const paths = samplePosts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
 
   return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // ここでブログ記事のデータを取得します。
-  // 実際のデータ取得ロジックは、APIやデータベースに応じて実装してください。
-  const blogPostData = {
-    title: `Sample Blog Post ${params?.id}`,
-    content: 'This is a sample blog post...',
-    createdAt: '2023-03-16',
-  };
+  const postId = params?.id;
+  const post = samplePosts.find((p) => p.id.toString() === postId);
 
-  return { props: blogPostData, revalidate: 10 };
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return { props: { post }, revalidate: 10 };
 };
