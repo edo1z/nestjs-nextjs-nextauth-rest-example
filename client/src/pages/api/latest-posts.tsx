@@ -1,36 +1,43 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getJwt } from '@/utils/auth/getJwt';
+import { ApiError } from '@/errors/apiError';
 
-// 仮のデータベースから投稿を取得する関数
-async function getLatestPosts(userId: number) {
-  // ここでデータベースから最新の10件の投稿を取得する処理を実装します。
-  // この例では、仮のデータを返します。
-  const posts = [
-    { id: 1, title: 'Post 1', content: 'This is post 1 content.' },
-    { id: 2, title: 'Post 2', content: 'This is post 2 content.' },
-    // ...
-  ];
-  return posts;
+async function getLatestPosts(token: string) {
+  const baseurl = process.env.API_URL ?? '';
+  const url = `${baseurl}/posts`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) {
+    const error = await res.json();
+    const message = error.message || res.statusText;
+    throw new ApiError(res.status, message);
+  }
+  return await res.json();
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method, query } = req;
-
-  if (method === 'GET') {
-    const userId = parseInt(query.userId as string);
-
-    try {
-      const posts = await getLatestPosts(userId);
-      res.status(200).json(posts);
-    } catch (error) {
+  const { method } = req;
+  if (method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+    return res.status(405).end(`Method ${method} Not Allowed`);
+  }
+  try {
+    const token = await getJwt(req);
+    const posts = await getLatestPosts(token);
+    return res.status(200).json(posts);
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json({ message: error.message });
+    } else {
       res
         .status(500)
         .json({ message: 'An error occurred while fetching posts.' });
     }
-  } else {
-    res.setHeader('Allow', 'GET');
-    res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
