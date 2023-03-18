@@ -6,15 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Post as PostEntity } from './entities/post.entity';
+import { AuthGuard } from '../auth/auth.guard';
+import { CustomRequest } from '../common/requests/custom-request';
 
 @Controller('posts')
 @ApiTags('posts')
+@UseGuards(AuthGuard)
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -33,7 +38,8 @@ export class PostsController {
     type: PostEntity,
     isArray: true,
   })
-  findAll() {
+  findAll(@Req() request: CustomRequest) {
+    console.log(request?.user);
     return this.postsService.findAll();
   }
 
