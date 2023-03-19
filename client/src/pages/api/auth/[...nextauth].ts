@@ -1,9 +1,10 @@
 import NextAuth from 'next-auth';
+import type { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { prisma } from '@mypj/database';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
@@ -18,4 +19,6 @@ export default NextAuth({
   jwt: {
     maxAge: 60 * 3,
   },
-});
+};
+
+export default NextAuth(authOptions);

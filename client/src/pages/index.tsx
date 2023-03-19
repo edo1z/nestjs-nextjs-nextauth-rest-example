@@ -1,8 +1,28 @@
 import { signIn, useSession } from 'next-auth/react';
 import { Container, Heading, Button, VStack, Box } from '@chakra-ui/react';
 import BlogList from '@/components/blog-list';
+import { getLatestPosts } from '@/api/latest-posts';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth/next';
+import { Post } from '@/types/blog';
 
-export default function Index() {
+export async function getServerSideProps({
+  req,
+  res,
+}: {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}) {
+  console.log('getServerSideProps!!!');
+  const session = await getServerSession(req, res, authOptions);
+  const latestPosts = session ? await getLatestPosts(req) : [];
+  return {
+    props: { latestPosts },
+  };
+}
+
+export default function Index({ latestPosts }: { latestPosts: Post[] }) {
   const { data: session, status } = useSession();
   const loading = status === 'loading';
 
@@ -33,7 +53,7 @@ export default function Index() {
           Latest Blog Posts
         </Heading>
       </Box>
-      <BlogList />
+      <BlogList posts={latestPosts} />
     </>
   );
 

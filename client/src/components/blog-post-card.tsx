@@ -12,11 +12,9 @@ export const BlogPostCard: React.FC<BlogPostProps> = ({ post }) => {
       p={4}
     >
       <NextLink href={`/blog/${post.id}`} passHref>
-        <Link _hover={{ textDecoration: 'none' }}>
-          <Heading as="h2" size="md" mb={3}>
-            {post.title}
-          </Heading>
-        </Link>
+        <Heading as="h2" size="md" mb={3}>
+          {post.title}
+        </Heading>
       </NextLink>
       <Box fontSize="sm" color="gray.500">
         {post.createdAt}

@@ -1,15 +1,9 @@
-import {
-  Box,
-  Heading,
-  VStack,
-  SimpleGrid,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, VStack, SimpleGrid, useColorModeValue } from '@chakra-ui/react';
 
-import { samplePosts } from '@/mock-data/sample-posts';
 import { BlogPostCard } from './blog-post-card';
+import { Post } from '@/types/blog';
 
-export default function BlogList() {
+export default function BlogList({ posts }: { posts: Post[] }) {
   const bg = useColorModeValue('gray.50', 'gray.700');
 
   return (
@@ -26,7 +20,7 @@ export default function BlogList() {
         spacing={{ base: 5, lg: 8 }}
         w="100%"
       >
-        {samplePosts.map((post) => (
+        {posts.map((post) => (
           <Box w="100%" key={post.id}>
             <BlogPostCard post={post} />
           </Box>
