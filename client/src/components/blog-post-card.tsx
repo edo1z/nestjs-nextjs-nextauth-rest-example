@@ -11,7 +11,7 @@ export const BlogPostCard: React.FC<BlogPostProps> = ({ post }) => {
       boxShadow="md"
       p={4}
     >
-      <NextLink href={`/blog/${post.id}`} passHref>
+      <NextLink href={`/post/${post.id}`} passHref>
         <Heading as="h2" size="md" mb={3}>
           {post.title}
         </Heading>

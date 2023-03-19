@@ -48,7 +48,8 @@ export class PostsController {
     description: 'The post has been successfully retrieved.',
     type: PostEntity,
   })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @Req() request: CustomRequest) {
+    console.log(request?.user);
     return this.postsService.findOne(+id);
   }
 
