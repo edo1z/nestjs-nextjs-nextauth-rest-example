@@ -6,6 +6,7 @@ export interface Post {
   category: string;
   content: string;
   author: string;
+  authorName: string;
 }
 
 export interface BlogPostProps {

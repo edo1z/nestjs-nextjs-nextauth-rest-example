@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class Post {
+export class GetPostDto {
   @ApiProperty({ description: 'The unique identifier of the post' })
   id: number;
 
@@ -21,4 +21,7 @@ export class Post {
 
   @ApiProperty({ description: 'The author ID of the post' })
   author: string;
+
+  @ApiProperty({ description: 'The author name of the post' })
+  authorName: string;
 }

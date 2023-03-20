@@ -14,6 +14,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Post as PostEntity } from './entities/post.entity';
+import { GetPostDto } from './dto/get-post.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { CustomRequest } from '../common/requests/custom-request';
 
@@ -28,29 +29,29 @@ export class PostsController {
     description: 'The post has been successfully created.',
     type: PostEntity,
   })
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  async create(@Body() createPostDto: CreatePostDto) {
+    return await this.postsService.create(createPostDto);
   }
 
   @Get()
   @ApiOkResponse({
     description: 'The posts have been successfully retrieved.',
-    type: PostEntity,
+    type: GetPostDto,
     isArray: true,
   })
-  findAll(@Req() request: CustomRequest) {
+  async findAll(@Req() request: CustomRequest) {
     console.log(request?.user);
-    return this.postsService.findAll();
+    return await this.postsService.findAll();
   }
 
   @Get(':id')
   @ApiOkResponse({
     description: 'The post has been successfully retrieved.',
-    type: PostEntity,
+    type: GetPostDto,
   })
-  findOne(@Param('id') id: string, @Req() request: CustomRequest) {
+  async findOne(@Param('id') id: string, @Req() request: CustomRequest) {
     console.log(request?.user);
-    return this.postsService.findOne(+id);
+    return await this.postsService.findOne(+id);
   }
 
   @Patch(':id')
@@ -58,8 +59,8 @@ export class PostsController {
     description: 'The post has been successfully updated.',
     type: PostEntity,
   })
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return await this.postsService.update(+id, updatePostDto);
   }
 
   @Delete(':id')
@@ -67,7 +68,7 @@ export class PostsController {
     description: 'The post has been successfully removed.',
     type: PostEntity,
   })
-  remove(@Param('id') id: string) {
-    return this.postsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.postsService.remove(+id);
   }
 }

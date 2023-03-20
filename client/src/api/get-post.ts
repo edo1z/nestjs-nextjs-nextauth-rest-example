@@ -16,5 +16,8 @@ export async function getPost(req: NextApiRequest, postId: number) {
     const message = error.message || res.statusText;
     throw new ApiError(res.status, message);
   }
-  return await res.json();
+  const _res = await res.json();
+  console.log('post', _res);
+  // return await res.json();
+  return await _res;
 }
