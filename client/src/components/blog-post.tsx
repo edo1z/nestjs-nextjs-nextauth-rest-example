@@ -9,12 +9,39 @@ import {
   HStack,
   VStack,
   Avatar,
+  Container,
+  Button,
 } from '@chakra-ui/react';
 import { BlogPostProps } from '../types/blog';
 
 export const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
-  const { title, content, createdAt, updatedAt, category, author, authorName } =
-    post;
+  const {
+    id,
+    title,
+    content,
+    createdAt,
+    updatedAt,
+    category,
+    author,
+    authorName,
+  } = post;
+
+  const formatDate = (dateString: string): string =>
+    new Date(dateString).toLocaleString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+  const handleEdit = () => {
+    // 編集処理を実行するコードをここに記述する
+  };
+
+  const handleDelete = () => {
+    // 削除処理を実行するコードをここに記述する
+  };
 
   return (
     <Box>
@@ -30,13 +57,15 @@ export const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
           {title}
         </Heading>
         <VStack spacing={4} mt={4} alignItems="center">
-          <HStack spacing={3}>
+          <HStack spacing={2}>
             <Text fontSize="md" color="white">
-              {createdAt}
+              Posted: {formatDate(createdAt)}
             </Text>
-            <Divider orientation="vertical" borderColor="white" />
             <Text fontSize="md" color="white">
-              Updated: {updatedAt}
+              <br />
+            </Text>
+            <Text fontSize="md" color="white">
+              Updated: {formatDate(updatedAt)}
             </Text>
           </HStack>
           <HStack spacing={3}>
@@ -44,20 +73,29 @@ export const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
               {category}
             </Badge>
             <HStack spacing={1}>
-              <Avatar size="xs" name={author} />
+              <Avatar size="xs" name={authorName} />
               <Text fontSize="md" color="white">
-                Author: {authorName}
+                {authorName}
               </Text>
             </HStack>
           </HStack>
         </VStack>
       </Flex>
-      <Box p={8}>
-        <Text fontSize="lg" lineHeight="tall">
-          {content}
-        </Text>
-        {/* Add images, blockquotes, and other content elements as needed */}
-      </Box>
+      <Container maxW="container.lg" mt={8} position="relative">
+        <HStack mb={8} mr={8}>
+          <Button colorScheme="teal" onClick={handleEdit}>
+            編集
+          </Button>
+          <Button colorScheme="red" onClick={handleDelete}>
+            削除
+          </Button>
+        </HStack>
+        <Box textAlign="center">
+          <Text fontSize="lg" lineHeight="tall">
+            {content}
+          </Text>
+        </Box>
+      </Container>
     </Box>
   );
 };
