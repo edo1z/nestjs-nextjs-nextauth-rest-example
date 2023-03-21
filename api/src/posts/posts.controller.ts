@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -29,8 +30,12 @@ export class PostsController {
     description: 'The post has been successfully created.',
     type: PostEntity,
   })
-  async create(@Body() createPostDto: CreatePostDto) {
-    return await this.postsService.create(createPostDto);
+  async create(@Body() postData: CreatePostDto, @Req() request: CustomRequest) {
+    const user = request?.user;
+    if (user.sub !== postData.author) {
+      throw new BadRequestException('Invalid request parameters');
+    }
+    return await this.postsService.create(postData);
   }
 
   @Get()

@@ -1,9 +1,9 @@
-import { getJwt } from '@/utils/auth/getJwt';
+import { getToken } from 'next-auth/jwt';
 import { ApiError } from '@/errors/apiError';
 import { NextApiRequest } from 'next';
 
 export async function getLatestPosts(req: NextApiRequest) {
-  const token = await getJwt(req);
+  const token = await getToken({ req, raw: true });
   const baseurl = process.env.API_URL ?? '';
   const url = `${baseurl}/posts`;
   const res = await fetch(url, {
